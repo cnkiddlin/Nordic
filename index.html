@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<title>北欧之旅 · 2026</title>
+<style>
+:root{
+  --ink:#1c2b36;
+  --muted:#5d6d7b;
+  --line:#dce5ec;
+  --bg:#f2f5f8;
+  --card:#ffffff;
+  --teal:#0f766e;
+  --teal-soft:#e4f2f0;
+  --navy:#23455f;
+  --coral:#d95d39;
+  --gold:#d99a2b;
+  --sky:#2e86ab;
+  --radius:8px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+svg{display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:14px 16px 48px}
+.tab-panel[hidden]{display:none}
+
+.masthead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:0 0 14px;
+  padding:12px 20px;
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  max-width:none;
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-mark{
+  width:34px;height:34px;border-radius:var(--radius);
+  background:var(--teal);color:#fff;
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+}
+.brand b{display:block;font-size:16px;white-space:nowrap}
+.brand small{display:block;color:var(--muted);font-size:12px}
+.masthead nav{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.masthead nav button{
+  font:inherit;
+  font-size:12px;line-height:1;padding:7px 9px;
+  color:var(--navy);text-decoration:none;
+  border:1px solid var(--line);border-radius:999px;background:#fff;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.masthead nav button:hover{border-color:var(--teal);color:var(--teal)}
+.masthead nav button.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+.now-card{
+  position:relative;
+  overflow:hidden;
+  padding:22px 22px 26px;
+  border-radius:var(--radius);
+  color:#fff;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255,255,255,.16) 0, rgba(255,255,255,0) 34%),
+    linear-gradient(135deg,#123b4c 0%,#0f766e 100%);
+}
+.now-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.12;
+  background-image:
+    linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px);
+  background-size:26px 26px;
+  mask-image:linear-gradient(90deg, transparent 40%, #000 100%);
+}
+.now-eyebrow{
+  position:relative;
+  margin:20px 0 2px;
+  font-size:12px;font-weight:700;opacity:.82;letter-spacing:1px;
+}
+.now-title{
+  position:relative;
+  margin:0;
+  font-size:clamp(24px, 5vw, 42px);
+  line-height:1.15;
+  letter-spacing:0;
+}
+.now-meta{
+  position:relative;
+  margin:8px 0 0;
+  font-size:14px;opacity:.92;
+}
+.countdown{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:20px;
+}
+.cd-cell{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:var(--radius);
+  padding:12px 8px 10px;
+  text-align:center;
+  min-width:0;
+}
+.cd-cell b{
+  display:block;
+  font-size:clamp(30px, 7vw, 54px);
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:0;
+}
+.cd-cell span{display:block;margin-top:6px;font-size:12px;opacity:.8}
+.section{margin-top:36px;scroll-margin-top:16px}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 12px}
+.section-head h2{font-size:20px;margin:0;letter-spacing:0}
+.section-head span{font-size:13px;color:var(--muted);white-space:nowrap}
+
+.grid{display:grid;gap:10px}
+.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+.clean-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:14px;
+  min-width:0;
+}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.kicker{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.6px;text-transform:uppercase}
+.code{font-size:16px;color:var(--teal);letter-spacing:.4px}
+.clean-card h3{font-size:15px;margin:0 0 4px;line-height:1.35}
+.clean-card h3 a{text-decoration:none}
+.clean-card h3 a:hover{color:var(--teal)}
+.meta{font-size:13px;color:var(--muted);margin:2px 0 0}
+.time{font-size:13px;font-weight:800;color:var(--teal);white-space:nowrap}
+
+.flight-route{display:flex;align-items:center;gap:12px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.flight-route .leg-end{flex:1;min-width:0}
+.flight-route b{display:block;font-size:13px}
+.flight-route span{display:block;font-size:11px;color:var(--muted)}
+.flight-route i{flex:0 0 auto;color:var(--coral);font-style:normal;font-weight:800}
+
+.rental-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px dashed var(--line)}
+.rental-row:first-of-type{border-top:0}
+.rental-row .r-time{font-size:12px;font-weight:800;color:var(--navy);white-space:nowrap}
+.rental-row .r-place{font-size:12px;color:var(--muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+
+.actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.link-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;line-height:1;
+  padding:7px 10px;
+  color:var(--navy);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.link-btn:hover{border-color:var(--teal);color:var(--teal)}
+.link-btn svg{flex:0 0 auto}
+
+.day-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.day-head{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 14px;
+  background:none;
+  border:0;
+  text-align:left;
+  cursor:pointer;
+  font:inherit;
+  color:inherit;
+}
+.day-head:hover{background:#f7fafc}
+.day-badge{
+  width:42px;height:42px;flex:0 0 auto;
+  border-radius:var(--radius);
+  background:var(--teal-soft);
+  color:var(--teal);
+  font-size:14px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.day-card.is-today .day-badge{background:var(--coral);color:#fff}
+.day-card.is-past .day-badge{background:#e8edf1;color:#8a99a6}
+.day-title{flex:1;min-width:0}
+.day-title b{display:block;font-size:15px;line-height:1.3}
+.day-title span{display:block;font-size:12px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.today-pill{
+  flex:0 0 auto;
+  font-size:11px;font-weight:800;color:#fff;
+  background:var(--coral);border-radius:999px;padding:4px 8px;
+}
+.chev{
+  flex:0 0 auto;width:22px;height:22px;color:var(--muted);
+  transform:rotate(0deg);transition:transform .2s ease;
+}
+.day-card.open .chev{transform:rotate(180deg)}
+.day-body{display:none;padding:2px 14px 10px;border-top:1px dashed var(--line)}
+.day-card.open .day-body{display:block}
+.day-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;border-bottom:1px dashed var(--line);
+}
+.day-item:last-child{border-bottom:0}
+.item-icon{
+  width:28px;height:28px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:6px;background:var(--teal-soft);color:var(--teal);
+}
+.item-main{flex:1;min-width:0}
+.item-title{display:block;font-size:13px;font-weight:700}
+.item-meta{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.item-meta b{color:var(--ink);font-weight:700}
+.day-item.free{background:#fbf7ef;border-radius:6px;padding:10px}
+.day-item.free .item-icon{background:#f7e8c8;color:#9a6a12}
+.day-note{font-size:12px;color:var(--muted);margin:8px 0 0}
+
+.future-block{
+  margin-top:10px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.future-head{
+  width:100%;
+  display:flex;align-items:center;gap:12px;
+  padding:13px 14px;
+  background:none;border:0;
+  text-align:left;cursor:pointer;
+  font:inherit;color:inherit;
+}
+.future-head:hover{background:#f7fafc}
+.future-badge{background:var(--navy);color:#fff;font-size:13px}
+.future-body{
+  display:none;
+  padding:12px 14px 0;
+  background:#fbfdfe;
+  border-top:1px dashed var(--line);
+}
+.future-block.open .future-body{display:block}
+.future-block.open .chev{transform:rotate(180deg)}
+.future-block .day-card{margin-bottom:10px}
+
+.footer{
+  color:var(--muted);
+  font-size:12px;
+  text-align:center;
+  padding-top:26px;
+}
+
+@media (max-width:900px){
+  .cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .masthead{flex-direction:column;align-items:flex-start}
+  .masthead nav{width:100%}
+  .cols-4,.cols-3,.cols-2{grid-template-columns:1fr}
+  .now-title{font-size:24px}
+  .countdown{gap:6px}
+  .cd-cell{padding:10px 4px 8px}
+  .section-head{flex-direction:column;align-items:flex-start;gap:2px}
+  .day-head{gap:9px}
+  .day-badge{width:38px;height:38px}
+  .future-head{gap:9px}
+  .future-badge{width:38px;height:38px}
+  .rental-row{flex-wrap:wrap}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .chev{transition:none}
+}
+</style>
+</head>
+<body>
+<header class="masthead wrap">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+    </span>
+    <span><b>北欧之旅</b></span>
+  </div>
+  <nav role="tablist" aria-label="内容分区">
+    <button type="button" class="tab-btn active" data-tab="home" id="tab-home" role="tab" aria-selected="true">每日行程</button>
+    <button type="button" class="tab-btn" data-tab="flights" id="tab-flights" role="tab" aria-selected="false">航班</button>
+    <button type="button" class="tab-btn" data-tab="hotels" id="tab-hotels" role="tab" aria-selected="false">酒店</button>
+    <button type="button" class="tab-btn" data-tab="rentals" id="tab-rentals" role="tab" aria-selected="false">租车</button>
+    <button type="button" class="tab-btn" data-tab="sights" id="tab-sights" role="tab" aria-selected="false">景点</button>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div class="tab-panel" id="panel-home" role="tabpanel" aria-labelledby="tab-home">
+    <section class="now-card" id="now">
+      <p class="now-eyebrow" id="nowEyebrow">下一站</p>
+      <h1 class="now-title" id="nowTitle">CA911 · 北京 → 斯德哥尔摩</h1>
+      <p class="now-meta" id="nowMeta">9/23 14:00 · 北京首都机场 T3 起飞</p>
+      <div class="countdown" id="countdown">
+        <div class="cd-cell"><b id="cdD">--</b><span>天</span></div>
+        <div class="cd-cell"><b id="cdH">--</b><span>小时</span></div>
+        <div class="cd-cell"><b id="cdM">--</b><span>分</span></div>
+        <div class="cd-cell"><b id="cdS">--</b><span>秒</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="days">
+      <div class="section-head">
+        <h2>每日行程</h2>
+        <span id="daySectionHint"></span>
+      </div>
+      <div id="dayList"></div>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="panel-flights" role="tabpanel" aria-labelledby="tab-flights" hidden>
+    <section class="section" id="flights">
+      <div class="section-head">
+        <h2>航班</h2>
+        <span>6 段飞行</span>
+      </div>
+      <div class="grid cols-2" id="flightList"></div>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="panel-hotels" role="tabpanel" aria-labelledby="tab-hotels" hidden>
+    <section class="section" id="hotels">
+      <div class="section-head">
+        <h2>酒店与住宿</h2>
+        <span>10 处住宿 · 13 晚</span>
+      </div>
+      <div class="grid cols-4" id="hotelList"></div>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="panel-rentals" role="tabpanel" aria-labelledby="tab-rentals" hidden>
+    <section class="section" id="rentals">
+      <div class="section-head">
+        <h2>租车</h2>
+        <span>2 段自驾</span>
+      </div>
+      <div class="grid cols-2" id="rentalList"></div>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="panel-sights" role="tabpanel" aria-labelledby="tab-sights" hidden>
+    <section class="section" id="sights">
+      <div class="section-head">
+        <h2>景点与活动</h2>
+        <span>徒步 · 海钓 · 温泉</span>
+      </div>
+      <div class="grid cols-3" id="sightList"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="footer wrap">北欧之旅 · 2026</footer>
+
+<script>
+const ICONS = {
+  plane: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>',
+  car: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><path d="M4 11h16v5h-2.5a1.5 1.5 0 0 1-3 0h-5a1.5 1.5 0 0 1-3 0H4z"/><circle cx="7.5" cy="13.5" r=".8"/><circle cx="16.5" cy="13.5" r=".8"/></svg>',
+  bed: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v11M3 15h18v3M3 15v-4a3 3 0 0 1 3-3h7v7"/><path d="M14 11h4a3 3 0 0 1 3 3v1"/><circle cx="7.5" cy="9.5" r="1"/></svg>',
+  hike: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/><path d="M8 21l3-7 3 4 2-2"/></svg>',
+  spark: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z"/></svg>',
+  clock: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  pin: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.1-7-11a7 7 0 0 1 14 0c0 5.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  nav: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 5.6L20 10l-5.6 2.4L12 18l-2.4-5.6L4 10l5.6-2.4L12 2z"/></svg>',
+  sun: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>',
+  chevron: '<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
+};
+
+const icon = (name, size) => ICONS[name] || ICONS.pin;
+const navUrl = q => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(q);
+
+const L = {
+  rubyFrida: 'https://www.google.com/maps/place/Ruby+Frida+Hotel+Stockholm+by+IHG/data=!4m2!3m1!1s0x465f9dd2a16c37c3:0x3caa204c583284d3',
+  moxyBergen: 'https://www.google.com/maps/place/Moxy+Bergen/data=!4m2!3m1!1s0x463cf9524557b203:0x526aeddb44ecb092',
+  moxyTromso: 'https://www.google.com/maps/place/Moxy+Tromso/data=!4m2!3m1!1s0x45c4c43bdcfdaff9:0x374faf0b9ffd18d5',
+  bostranda: 'https://www.google.com/maps/place/B%C3%B8stranda/data=!4m2!3m1!1s0x45dca9492b7a30c7:0x1c850dabb44a5d04',
+  nupenveien: 'https://www.google.com/maps/place/Nupenveien+249/data=!4m2!3m1!1s0x45dc7cdbde89f0a9:0x360f91f600d98cf1',
+  skarungen: 'https://www.google.com/maps/place/Sk%C3%A5rungen+Lofoten/data=!4m2!3m1!1s0x45de7f431488869f:0xffa92643a728e423',
+  arctic: 'https://www.google.com/maps/place/Arctic+Resort+Lofoten/data=!4m2!3m1!1s0x45de176087634da9:0xf7f84662986437a3',
+  vaganveien: 'https://www.google.com/maps/place/V%C3%A5ganveien+23/data=!4m2!3m1!1s0x45de7e36556ab0c5:0x34f4e417716f3afd',
+  cityboxOslo: 'https://www.google.com/maps/place/Citybox+Oslo/data=!4m2!3m1!1s0x46416e89bc7776f5:0x9577acea0158878b',
+  moxyWarsaw: 'https://www.google.com/maps/place/Moxy+Warsaw+City/data=!4m2!3m1!1s0x471ecd0c5abf266b:0x816934fa24c95c69',
+  budgetPick: 'https://www.google.com/maps/place/Budget+Leiebil+-+Bergen/data=!4m2!3m1!1s0x463cfeab92f1ed7f:0x3b96834351ea86df',
+  budgetReturn: 'https://www.google.com/maps/place/Budget+Bilutleie+Bergen+Lufthavn/data=!4m2!3m1!1s0x463cf07f458e4977:0xc5d142c5a8b4f424',
+  hertzPick: 'https://www.google.com/maps/place/Hertz+Troms%C3%B8/data=!4m2!3m1!1s0x45c4c45340000001:0x91638fd06032d0d5',
+  hertzReturn: 'https://www.google.com/maps/place/Hertz/data=!4m2!3m1!1s0x45db8be8662506f7:0x1349ae61d02d9cbd',
+  floyen: 'https://www.google.com/maps/place/Fl%C3%B8yen/data=!4m2!3m1!1s0x463cfebb723130f7:0x33ce3da8861f86e8',
+  hesten: 'https://www.google.com/maps/place/Hesten/data=!4m2!3m1!1s0x45db551aa72321a1:0xbbf2b3bef832c8d2',
+  husfjell: 'https://www.google.com/maps/place/Husfjell/data=!4m2!3m1!1s0x45dca9686fd44af1:0xa7f9c6d19d52a47',
+  offersoy: 'https://www.google.com/maps/place/Offers%C3%B8ykammen/data=!4m2!3m1!1s0x45de127bd33c1697:0x2e37ebf4139e94ae',
+  reinebringen: 'https://www.google.com/maps/place/Reinebringen/data=!4m2!3m1!1s0x45de3cbc08e93c39:0xcbf19f3e3766e4e9',
+  fishing: 'https://www.google.com/maps/place/Sj%C3%B8mannsgata+5/data=!4m6!3m5!1s0x45de807753a0561b:0x9c9dbcd749147166!8m2!3d68.2338498!4d14.5677463!16s%2Fg%2F11c43vq6v0'
+};
+
+const FLIGHTS = [
+  {code:'CA911', air:'国航', date:'9/23', dep:'14:00', arr:'17:20', arrDate:'9/23', from:'北京首都机场 T3', to:'斯德哥尔摩阿兰达机场 T5', iata:'PEK → ARN'},
+  {code:'AY805', air:'芬兰航空', date:'9/25', dep:'08:45', arr:'10:05', arrDate:'9/25', from:'斯德哥尔摩阿兰达机场 T2', to:'卑尔根机场', iata:'ARN → BGO'},
+  {code:'WF640', air:'维德勒航空', date:'9/27', dep:'20:15', arr:'22:20', arrDate:'9/27', from:'卑尔根机场', to:'特罗姆瑟机场', iata:'BGO → TOS'},
+  {code:'DY367', air:'挪威穿梭航空', date:'10/4', dep:'16:20', arr:'18:05', arrDate:'10/4', from:'埃沃内斯机场', to:'奥斯陆机场', iata:'EVE → OSL'},
+  {code:'LO484', air:'波兰航空', date:'10/5', dep:'19:45', arr:'21:40', arrDate:'10/5', from:'奥斯陆机场', to:'华沙机场', iata:'OSL → WAW'},
+  {code:'CA738', air:'国航', date:'10/6', dep:'13:30', arr:'04:00', arrDate:'10/7', from:'华沙机场', to:'北京首都机场 T3', iata:'WAW → PEK'}
+];
+
+const RENTALS = [
+  {
+    platform:'Budget', vehicle:'VW ID.3',
+    pick:{time:'9/26 08:00', place:'卑尔根市区', link:L.budgetPick},
+    ret:{time:'9/27 20:00', place:'卑尔根机场 · 最晚还车', link:L.budgetReturn}
+  },
+  {
+    platform:'Hertz', vehicle:'Volvo EX40',
+    pick:{time:'9/28 15:00', place:'特罗姆瑟市区', link:L.hertzPick},
+    ret:{time:'10/4 15:00', place:'埃沃内斯机场 · 最晚还车', link:L.hertzReturn}
+  }
+];
+
+const HOTELS = [
+  {name:'Ruby Frida Hotel Stockholm by IHG', city:'斯德哥尔摩', dates:'9/23 - 9/24 · 2 晚', platform:'IHG', link:L.rubyFrida},
+  {name:'Moxy Bergen', city:'卑尔根', dates:'9/25 - 9/26 · 2 晚', platform:'Marriott', link:L.moxyBergen},
+  {name:'Moxy Tromso', city:'特罗姆瑟', dates:'9/27 - 9/28 · 2 晚', platform:'Marriott', link:L.moxyTromso},
+  {name:'Bøstranda', city:'塞尼亚', dates:'9/29 · 1 晚', platform:'Airbnb', link:L.bostranda},
+  {name:'Nupenveien 249', city:'哈尔斯塔', dates:'9/30 · 1 晚', platform:'Airbnb', link:L.nupenveien},
+  {name:'Skårungen Lofoten', city:'斯沃尔韦尔', dates:'10/1 · 1 晚', platform:'Booking', link:L.skarungen},
+  {name:'Arctic Resort Lofoten', city:'雷讷', dates:'10/2 · 1 晚', platform:'Booking', link:L.arctic},
+  {name:'Våganveien 23', city:'斯沃尔韦尔', dates:'10/3 · 1 晚', platform:'Airbnb', link:L.vaganveien},
+  {name:'Citybox Oslo', city:'奥斯陆', dates:'10/4 · 1 晚', platform:'携程', link:L.cityboxOslo},
+  {name:'Moxy Warsaw City', city:'华沙', dates:'10/5 · 1 晚', platform:'Marriott', link:L.moxyWarsaw}
+];
+
+const SIGHTS = [
+  {name:'Fløyen', cat:'徒步', date:'9/25', time:'', place:'卑尔根', link:L.floyen},
+  {name:'Hesten', cat:'徒步', date:'9/29', time:'', place:'塞尼亚', link:L.hesten},
+  {name:'Husfjell', cat:'徒步', date:'9/30', time:'', place:'哈尔斯塔', link:L.husfjell},
+  {name:'海钓', cat:'活动', date:'10/1', time:'14:00', place:'Sjømannsgata 5 · 斯沃尔韦尔', link:L.fishing},
+  {name:'温泉', cat:'活动', date:'10/1', time:'18:00', place:'Skårungen Lofoten', link:L.skarungen},
+  {name:'Offersøykammen', cat:'徒步', date:'10/2', time:'', place:'雷讷', link:L.offersoy},
+  {name:'Reinebringen', cat:'徒步', date:'10/3', time:'', place:'雷讷', link:L.reinebringen}
+];
+
+const DAYS = [
+  {
+    id:'D1', date:'9/23', dateKey:'2026-09-23', week:'周三', place:'斯德哥尔摩',
+    items:[
+      {icon:'plane', title:'CA911 · 国航', time:'14:00 起飞 · 17:20 抵达', place:'北京首都机场 T3 → 斯德哥尔摩阿兰达机场 T5'},
+      {icon:'bed', title:'Ruby Frida Hotel Stockholm by IHG', time:'入住 · 2 晚', place:'斯德哥尔摩 · IHG', link:L.rubyFrida}
+    ]
+  },
+  {
+    id:'D2', date:'9/24', dateKey:'2026-09-24', week:'周四', place:'斯德哥尔摩',
+    items:[
+      {icon:'sun', title:'自由日', time:'全天', place:'斯德哥尔摩市区', free:true},
+      {icon:'bed', title:'Ruby Frida Hotel Stockholm by IHG', time:'第 2 晚', place:'斯德哥尔摩 · IHG', link:L.rubyFrida}
+    ]
+  },
+  {
+    id:'D3', date:'9/25', dateKey:'2026-09-25', week:'周五', place:'卑尔根',
+    items:[
+      {icon:'plane', title:'AY805 · 芬兰航空', time:'08:45 起飞 · 10:05 抵达', place:'斯德哥尔摩阿兰达机场 T2 → 卑尔根机场'},
+      {icon:'hike', title:'Fløyen', time:'', place:'卑尔根', link:L.floyen},
+      {icon:'bed', title:'Moxy Bergen', time:'入住 · 2 晚', place:'卑尔根 · Marriott', link:L.moxyBergen}
+    ]
+  },
+  {
+    id:'D4', date:'9/26', dateKey:'2026-09-26', week:'周六', place:'卑尔根',
+    items:[
+      {icon:'car', title:'Budget · 取车', time:'9/26 08:00', place:'卑尔根市区 · VW ID.3', link:L.budgetPick},
+      {icon:'sun', title:'自驾日', time:'全天', place:'卑尔根出发，当日行程未安排', free:true},
+      {icon:'bed', title:'Moxy Bergen', time:'第 2 晚', place:'卑尔根 · Marriott', link:L.moxyBergen}
+    ]
+  },
+  {
+    id:'D5', date:'9/27', dateKey:'2026-09-27', week:'周日', place:'特罗姆瑟',
+    items:[
+      {icon:'car', title:'Budget · 还车', time:'最晚 20:00', place:'卑尔根机场', link:L.budgetReturn},
+      {icon:'plane', title:'WF640 · 维德勒航空', time:'20:15 起飞 · 22:20 抵达', place:'卑尔根机场 → 特罗姆瑟机场'},
+      {icon:'bed', title:'Moxy Tromso', time:'入住 · 2 晚', place:'特罗姆瑟 · Marriott', link:L.moxyTromso}
+    ]
+  },
+  {
+    id:'D6', date:'9/28', dateKey:'2026-09-28', week:'周一', place:'特罗姆瑟',
+    items:[
+      {icon:'sun', title:'自由日', time:'上午', place:'特罗姆瑟市区', free:true},
+      {icon:'car', title:'Hertz · 取车', time:'15:00', place:'特罗姆瑟市区 · Volvo EX40', link:L.hertzPick},
+      {icon:'bed', title:'Moxy Tromso', time:'第 2 晚', place:'特罗姆瑟 · Marriott', link:L.moxyTromso}
+    ]
+  },
+  {
+    id:'D7', date:'9/29', dateKey:'2026-09-29', week:'周二', place:'塞尼亚',
+    items:[
+      {icon:'car', title:'自驾 · 往塞尼亚', time:'', place:'特罗姆瑟 → 塞尼亚'},
+      {icon:'hike', title:'Hesten', time:'', place:'塞尼亚', link:L.hesten},
+      {icon:'bed', title:'Bøstranda', time:'入住 · 1 晚', place:'塞尼亚 · Airbnb', link:L.bostranda}
+    ]
+  },
+  {
+    id:'D8', date:'9/30', dateKey:'2026-09-30', week:'周三', place:'哈尔斯塔',
+    items:[
+      {icon:'hike', title:'Husfjell', time:'', place:'哈尔斯塔', link:L.husfjell},
+      {icon:'car', title:'自驾 · 往哈尔斯塔', time:'', place:'塞尼亚 → 哈尔斯塔'},
+      {icon:'bed', title:'Nupenveien 249', time:'入住 · 1 晚', place:'哈尔斯塔 · Airbnb', link:L.nupenveien}
+    ]
+  },
+  {
+    id:'D9', date:'10/1', dateKey:'2026-10-01', week:'周四', place:'斯沃尔韦尔',
+    items:[
+      {icon:'car', title:'自驾 · 往斯沃尔韦尔', time:'', place:'哈尔斯塔 → 斯沃尔韦尔'},
+      {icon:'spark', title:'海钓', time:'14:00', place:'Sjømannsgata 5 · 斯沃尔韦尔', link:L.fishing},
+      {icon:'spark', title:'温泉', time:'18:00', place:'Skårungen Lofoten', link:L.skarungen},
+      {icon:'bed', title:'Skårungen Lofoten', time:'入住 · 1 晚', place:'斯沃尔韦尔 · Booking', link:L.skarungen}
+    ]
+  },
+  {
+    id:'D10', date:'10/2', dateKey:'2026-10-02', week:'周五', place:'雷讷',
+    items:[
+      {icon:'car', title:'自驾 · 往雷讷', time:'', place:'斯沃尔韦尔 → 雷讷'},
+      {icon:'hike', title:'Offersøykammen', time:'', place:'雷讷', link:L.offersoy},
+      {icon:'bed', title:'Arctic Resort Lofoten', time:'入住 · 1 晚', place:'雷讷 · Booking', link:L.arctic}
+    ]
+  },
+  {
+    id:'D11', date:'10/3', dateKey:'2026-10-03', week:'周六', place:'斯沃尔韦尔',
+    items:[
+      {icon:'hike', title:'Reinebringen', time:'', place:'雷讷', link:L.reinebringen},
+      {icon:'car', title:'自驾 · 回斯沃尔韦尔', time:'', place:'雷讷 → 斯沃尔韦尔'},
+      {icon:'bed', title:'Våganveien 23', time:'入住 · 1 晚', place:'斯沃尔韦尔 · Airbnb', link:L.vaganveien}
+    ]
+  },
+  {
+    id:'D12', date:'10/4', dateKey:'2026-10-04', week:'周日', place:'奥斯陆',
+    items:[
+      {icon:'car', title:'Hertz · 还车', time:'最晚 15:00', place:'埃沃内斯机场', link:L.hertzReturn},
+      {icon:'plane', title:'DY367 · 挪威穿梭航空', time:'16:20 起飞 · 18:05 抵达', place:'埃沃内斯机场 → 奥斯陆机场'},
+      {icon:'bed', title:'Citybox Oslo', time:'入住 · 1 晚', place:'奥斯陆 · 携程', link:L.cityboxOslo}
+    ]
+  },
+  {
+    id:'D13', date:'10/5', dateKey:'2026-10-05', week:'周一', place:'华沙',
+    items:[
+      {icon:'sun', title:'自由日', time:'白天', place:'奥斯陆市区', free:true},
+      {icon:'plane', title:'LO484 · 波兰航空', time:'19:45 起飞 · 21:40 抵达', place:'奥斯陆机场 → 华沙机场'},
+      {icon:'bed', title:'Moxy Warsaw City', time:'入住 · 1 晚', place:'华沙 · Marriott', link:L.moxyWarsaw}
+    ]
+  },
+  {
+    id:'D14', date:'10/6', dateKey:'2026-10-06', week:'周二', place:'北京',
+    items:[
+      {icon:'plane', title:'CA738 · 国航', time:'13:30 起飞 · 10/7 04:00 抵达', place:'华沙机场 → 北京首都机场 T3'},
+      {icon:'clock', title:'机上过夜', time:'', place:'航班中', free:true}
+    ]
+  }
+];
+
+const EVENTS = [
+  {kind:'flight', title:'CA911 · 北京出发', sub:'北京首都机场 T3 → 斯德哥尔摩阿兰达 T5', date:'2026-09-23', time:'14:00', tz:'Asia/Shanghai'},
+  {kind:'flight', title:'CA911 · 抵达斯德哥尔摩', sub:'斯德哥尔摩阿兰达机场 T5', date:'2026-09-23', time:'17:20', tz:'Europe/Stockholm'},
+  {kind:'hotel', title:'Ruby Frida Hotel Stockholm by IHG · 入住', sub:'斯德哥尔摩 · IHG', date:'2026-09-23', time:'19:00', tz:'Europe/Stockholm'},
+  {kind:'flight', title:'AY805 · 斯德哥尔摩出发', sub:'斯德哥尔摩阿兰达 T2 → 卑尔根机场', date:'2026-09-25', time:'08:45', tz:'Europe/Stockholm'},
+  {kind:'flight', title:'AY805 · 抵达卑尔根', sub:'卑尔根机场', date:'2026-09-25', time:'10:05', tz:'Europe/Oslo'},
+  {kind:'hotel', title:'Moxy Bergen · 入住', sub:'卑尔根 · Marriott', date:'2026-09-25', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'pickup', title:'Budget · 取车', sub:'卑尔根市区 · VW ID.3', date:'2026-09-26', time:'08:00', tz:'Europe/Oslo'},
+  {kind:'return', title:'Budget · 还车', sub:'卑尔根机场 · 最晚', date:'2026-09-27', time:'20:00', tz:'Europe/Oslo'},
+  {kind:'flight', title:'WF640 · 卑尔根出发', sub:'卑尔根机场 → 特罗姆瑟机场', date:'2026-09-27', time:'20:15', tz:'Europe/Oslo'},
+  {kind:'flight', title:'WF640 · 抵达特罗姆瑟', sub:'特罗姆瑟机场', date:'2026-09-27', time:'22:20', tz:'Europe/Oslo'},
+  {kind:'hotel', title:'Moxy Tromso · 入住', sub:'特罗姆瑟 · Marriott', date:'2026-09-27', time:'23:00', tz:'Europe/Oslo'},
+  {kind:'pickup', title:'Hertz · 取车', sub:'特罗姆瑟市区 · Volvo EX40', date:'2026-09-28', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'hotel', title:'Bøstranda · 入住', sub:'塞尼亚 · Airbnb', date:'2026-09-29', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'hotel', title:'Nupenveien 249 · 入住', sub:'哈尔斯塔 · Airbnb', date:'2026-09-30', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'activity', title:'海钓', sub:'Sjømannsgata 5 · 斯沃尔韦尔', date:'2026-10-01', time:'14:00', tz:'Europe/Oslo'},
+  {kind:'activity', title:'温泉', sub:'Skårungen Lofoten', date:'2026-10-01', time:'18:00', tz:'Europe/Oslo'},
+  {kind:'hotel', title:'Skårungen Lofoten · 入住', sub:'斯沃尔韦尔 · Booking', date:'2026-10-01', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'hotel', title:'Arctic Resort Lofoten · 入住', sub:'雷讷 · Booking', date:'2026-10-02', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'hotel', title:'Våganveien 23 · 入住', sub:'斯沃尔韦尔 · Airbnb', date:'2026-10-03', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'return', title:'Hertz · 还车', sub:'埃沃内斯机场 · 最晚', date:'2026-10-04', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'flight', title:'DY367 · 埃沃内斯出发', sub:'埃沃内斯机场 → 奥斯陆机场', date:'2026-10-04', time:'16:20', tz:'Europe/Oslo'},
+  {kind:'flight', title:'DY367 · 抵达奥斯陆', sub:'奥斯陆机场', date:'2026-10-04', time:'18:05', tz:'Europe/Oslo'},
+  {kind:'hotel', title:'Citybox Oslo · 入住', sub:'奥斯陆 · 携程', date:'2026-10-04', time:'15:00', tz:'Europe/Oslo'},
+  {kind:'flight', title:'LO484 · 奥斯陆出发', sub:'奥斯陆机场 → 华沙机场', date:'2026-10-05', time:'19:45', tz:'Europe/Oslo'},
+  {kind:'flight', title:'LO484 · 抵达华沙', sub:'华沙机场', date:'2026-10-05', time:'21:40', tz:'Europe/Warsaw'},
+  {kind:'hotel', title:'Moxy Warsaw City · 入住', sub:'华沙 · Marriott', date:'2026-10-05', time:'23:00', tz:'Europe/Warsaw'},
+  {kind:'flight', title:'CA738 · 华沙出发', sub:'华沙机场 → 北京首都机场 T3', date:'2026-10-06', time:'13:30', tz:'Europe/Warsaw'},
+  {kind:'flight', title:'CA738 · 抵达北京', sub:'北京首都机场 T3', date:'2026-10-07', time:'04:00', tz:'Asia/Shanghai'}
+];
+
+function localDateKey(now){
+  const d = now || new Date();
+  const p = n => String(n).padStart(2,'0');
+  return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate());
+}
+
+function zonedEpoch(dateStr, timeStr, tz){
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const [hh, mm] = timeStr.split(':').map(Number);
+  const dtf = new Intl.DateTimeFormat('en-US', {
+    timeZone: tz, year:'numeric', month:'2-digit', day:'2-digit',
+    hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'
+  });
+  const read = when => {
+    const parts = dtf.formatToParts(when);
+    const v = {};
+    parts.forEach(p => { if (p.type !== 'literal') v[p.type] = Number(p.value); });
+    return v;
+  };
+  const candidate = Date.UTC(y, m-1, d, hh, mm, 0);
+  const first = read(candidate);
+  const localAsUtc = Date.UTC(first.year, first.month-1, first.day, first.hour, first.minute, first.second);
+  const offset = localAsUtc - candidate;
+  const epoch = candidate - offset;
+  const check = read(epoch);
+  if (check.year === y && check.month === m && check.day === d && check.hour === hh && check.minute === mm) return epoch;
+  const alt = read(candidate - 86400000);
+  const altLocal = Date.UTC(alt.year, alt.month-1, alt.day, alt.hour, alt.minute, alt.second);
+  const altOffset = altLocal - (candidate - 86400000);
+  return candidate - altOffset;
+}
+
+const startUtc = Date.parse('2026-09-23T00:00:00Z');
+const endUtc = Date.parse('2026-10-07T12:00:00Z');
+const zonedEvents = EVENTS.map(e => ({...e, start: zonedEpoch(e.date, e.time, e.tz)})).sort((a, b) => a.start - b.start);
+
+function renderFlights(){
+  document.getElementById('flightList').innerHTML = FLIGHTS.map(f => `
+    <article class="clean-card">
+      <div class="card-top"><span class="kicker">${f.air}</span><span class="code">${f.code}</span></div>
+      <h3>${f.from} → ${f.to}</h3>
+      <p class="meta">${f.iata}</p>
+      <div class="flight-route">
+        <div class="leg-end"><b>${f.date} ${f.dep}</b><span>${f.from}</span></div>
+        <i>→</i>
+        <div class="leg-end"><b>${f.arrDate} ${f.arr}</b><span>${f.to}</span></div>
+      </div>
+    </article>`).join('');
+}
+
+function renderRentals(){
+  document.getElementById('rentalList').innerHTML = RENTALS.map(r => `
+    <article class="clean-card">
+      <div class="card-top"><span class="kicker">${r.platform}</span><span class="code">${r.vehicle}</span></div>
+      <div class="rental-row">
+        <span class="r-time">取车 · ${r.pick.time}</span>
+        <span class="r-place">${r.pick.place}</span>
+      </div>
+      <div class="actions">
+        <a class="link-btn" href="${r.pick.link}" target="_blank" rel="noopener">${icon('pin')}地图</a>
+        <a class="link-btn" href="${navUrl(r.pick.place)}" target="_blank" rel="noopener">${icon('nav')}导航</a>
+      </div>
+      <div class="rental-row">
+        <span class="r-time">还车 · ${r.ret.time}</span>
+        <span class="r-place">${r.ret.place}</span>
+      </div>
+      <div class="actions">
+        <a class="link-btn" href="${r.ret.link}" target="_blank" rel="noopener">${icon('pin')}地图</a>
+        <a class="link-btn" href="${navUrl(r.ret.place)}" target="_blank" rel="noopener">${icon('nav')}导航</a>
+      </div>
+    </article>`).join('');
+}
+
+function renderHotels(){
+  document.getElementById('hotelList').innerHTML = HOTELS.map(h => `
+    <article class="clean-card">
+      <div class="card-top"><span class="kicker">${h.platform} · ${h.dates}</span></div>
+      <h3><a href="${h.link}" target="_blank" rel="noopener">${h.name}</a></h3>
+      <p class="meta">${h.city}</p>
+      <div class="actions">
+        <a class="link-btn" href="${h.link}" target="_blank" rel="noopener">${icon('pin')}地图</a>
+        <a class="link-btn" href="${navUrl(h.name)}" target="_blank" rel="noopener">${icon('nav')}导航</a>
+      </div>
+    </article>`).join('');
+}
+
+function renderSights(){
+  document.getElementById('sightList').innerHTML = SIGHTS.map(s => `
+    <article class="clean-card">
+      <div class="card-top"><span class="kicker">${s.cat}</span><span class="time">${s.date}${s.time ? ' ' + s.time : ''}</span></div>
+      <h3><a href="${s.link}" target="_blank" rel="noopener">${s.name}</a></h3>
+      <p class="meta">${s.place}</p>
+      <div class="actions">
+        <a class="link-btn" href="${s.link}" target="_blank" rel="noopener">${icon('pin')}地图</a>
+        <a class="link-btn" href="${navUrl(s.name + ' ' + s.place)}" target="_blank" rel="noopener">${icon('nav')}导航</a>
+      </div>
+    </article>`).join('');
+}
+
+function dayCardHtml(d, isToday, open){
+  const today = localDateKey();
+  const statusClass = isToday ? 'is-today' : (d.dateKey < today ? 'is-past' : '');
+  const items = d.items.map(it => {
+    const links = it.link ? `
+      <div class="actions">
+        <a class="link-btn" href="${it.link}" target="_blank" rel="noopener">${icon('pin')}地图</a>
+        <a class="link-btn" href="${navUrl(it.place)}" target="_blank" rel="noopener">${icon('nav')}导航</a>
+      </div>` : '';
+    return `
+      <div class="day-item${it.free ? ' free' : ''}">
+        <span class="item-icon">${icon(it.icon)}</span>
+        <div class="item-main">
+          <span class="item-title">${it.title}</span>
+          <span class="item-meta">${it.time ? '<b>' + it.time + '</b> · ' : ''}${it.place}</span>
+        </div>
+        ${links}
+      </div>`;
+  }).join('');
+  const pill = isToday ? '<span class="today-pill">今日</span>' : '';
+  return `
+    <article class="day-card${statusClass}${open ? ' open' : ''}" data-day="${d.id}">
+      <button class="day-head" aria-expanded="${open ? 'true' : 'false'}">
+        <span class="day-badge">${d.id}</span>
+        <span class="day-title">
+          <b>${d.date} · ${d.week} · ${d.place}</b>
+          <span>${d.items[0].title}</span>
+        </span>
+        ${pill}
+        ${icon('chevron')}
+      </button>
+      <div class="day-body">${items}</div>
+    </article>`;
+}
+
+function bindDayToggles(){
+  document.querySelectorAll('.day-head').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.day-card');
+      const open = card.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+  const futureHead = document.querySelector('.future-head');
+  if (futureHead){
+    futureHead.addEventListener('click', () => {
+      const block = futureHead.closest('.future-block');
+      const open = block.classList.toggle('open');
+      futureHead.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+}
+
+function renderDays(){
+  const now = Date.now();
+  const today = localDateKey();
+  const tripStarted = now >= startUtc;
+  const tripEnded = now > endUtc;
+  const todayIdx = DAYS.findIndex(d => d.dateKey === today);
+  const hintEl = document.getElementById('daySectionHint');
+  let html = '';
+
+  if (!tripStarted || tripEnded){
+    html = DAYS.map(d => dayCardHtml(d, !tripEnded && d.dateKey === today, true)).join('');
+    hintEl.textContent = tripEnded ? '14 天行程回顾' : '14 天行程 · 全部展开';
+  } else if (todayIdx >= 0){
+    html = dayCardHtml(DAYS[todayIdx], true, true);
+    const rest = DAYS.slice(todayIdx + 1);
+    if (rest.length){
+      html += `
+        <div class="future-block" id="futureBlock">
+          <button class="future-head" type="button" aria-expanded="false">
+            <span class="day-badge future-badge">···</span>
+            <span class="day-title">
+              <b>后续行程</b>
+              <span>剩余 ${rest.length} 天 · 点击展开</span>
+            </span>
+            ${icon('chevron')}
+          </button>
+          <div class="future-body">${rest.map(d => dayCardHtml(d, false, true)).join('')}</div>
+        </div>`;
+    }
+    hintEl.textContent = rest.length ? `今日 ${DAYS[todayIdx].id} · 其余 ${rest.length} 天已收起` : `今日 ${DAYS[todayIdx].id} · 行程已全部完成`;
+  } else {
+    html = DAYS.map(d => dayCardHtml(d, false, false)).join('');
+    hintEl.textContent = '';
+  }
+
+  document.getElementById('dayList').innerHTML = html;
+  bindDayToggles();
+}
+
+function setupTabs(){
+  const buttons = Array.from(document.querySelectorAll('.tab-btn'));
+  const panels = buttons.map(b => document.getElementById('panel-' + b.dataset.tab));
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b, i) => {
+        const on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+        panels[i].hidden = !on;
+      });
+      const panel = document.getElementById('panel-' + btn.dataset.tab);
+      if (panel && typeof panel.scrollIntoView === 'function'){
+        panel.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    });
+  });
+}
+
+function updateNow(){
+  const now = Date.now();
+  const future = zonedEvents.filter(e => e.start > now && ['flight', 'pickup', 'return', 'hotel'].includes(e.kind));
+  const next = future.length ? future[0] : null;
+  const titleEl = document.getElementById('nowTitle');
+  const metaEl = document.getElementById('nowMeta');
+  const eyebrowEl = document.getElementById('nowEyebrow');
+
+  if (now > endUtc){
+    eyebrowEl.textContent = '旅程已结束';
+    titleEl.textContent = '欢迎回家';
+    metaEl.textContent = '北欧之旅 · 行程完成';
+    clearCountdown();
+    return;
+  }
+  if (!next){
+    eyebrowEl.textContent = '旅程预计';
+    titleEl.textContent = '行程即将开始';
+    metaEl.textContent = '9/23 从北京出发';
+    clearCountdown();
+    return;
+  }
+
+  eyebrowEl.textContent = '下一站';
+  titleEl.textContent = next.title;
+  metaEl.textContent = `${next.date.slice(5).replace('-', '/')} ${next.time} · ${next.sub}`;
+  const diff = next.start - now;
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor(diff / 3600000) % 24;
+  const mins = Math.floor(diff / 60000) % 60;
+  const secs = Math.floor(diff / 1000) % 60;
+  document.getElementById('cdD').textContent = String(days).padStart(2, '0');
+  document.getElementById('cdH').textContent = String(hours).padStart(2, '0');
+  document.getElementById('cdM').textContent = String(mins).padStart(2, '0');
+  document.getElementById('cdS').textContent = String(secs).padStart(2, '0');
+}
+
+function clearCountdown(){
+  ['cdD','cdH','cdM','cdS'].forEach(id => document.getElementById(id).textContent = '00');
+}
+
+renderFlights();
+renderRentals();
+renderHotels();
+renderSights();
+renderDays();
+setupTabs();
+updateNow();
+setInterval(updateNow, 1000);
+</script>
+</body>
+</html>
