@@ -773,7 +773,7 @@ function dayCardHtml(d, isToday, open){
   }).join('');
   const pill = isToday ? '<span class="today-pill">今日</span>' : '';
   return `
-    <article class="day-card${statusClass}${open ? ' open' : ''}" data-day="${d.id}">
+    <article class="day-card${statusClass ? ' ' + statusClass : ''}${open ? ' open' : ''}" data-day="${d.id}">
       <button class="day-head" aria-expanded="${open ? 'true' : 'false'}">
         <span class="day-badge">${d.id}</span>
         <span class="day-title">
