@@ -199,6 +199,7 @@ svg{display:block}
   border-radius:var(--radius);
   margin-bottom:10px;
   overflow:hidden;
+  scroll-margin-top:14px;
 }
 .day-head{
   width:100%;
@@ -806,13 +807,21 @@ function bindDayToggles(){
 function renderDays(){
   const now = Date.now();
   const today = localDateKey();
+  const tripStarted = now >= startUtc;
   const tripEnded = now > endUtc;
   const todayIdx = DAYS.findIndex(d => d.dateKey === today);
   const hintEl = document.getElementById('daySectionHint');
-  const html = DAYS.map((d, i) => dayCardHtml(d, !tripEnded && i === todayIdx, true)).join('');
+  const openAll = !tripStarted || tripEnded || todayIdx < 0;
+  const html = DAYS.map((d, i) => dayCardHtml(d, !tripEnded && i === todayIdx, openAll || i >= todayIdx)).join('');
   hintEl.textContent = tripEnded ? '14 天行程回顾' : (todayIdx >= 0 ? '今日 ' + DAYS[todayIdx].id : '14 天行程');
   document.getElementById('dayList').innerHTML = html;
   bindDayToggles();
+  if (todayIdx >= 0 && !tripEnded){
+    const todayCard = document.querySelector(`[data-day="${DAYS[todayIdx].id}"]`);
+    if (todayCard && typeof todayCard.scrollIntoView === 'function'){
+      todayCard.scrollIntoView({block:'start'});
+    }
+  }
 }
 
 function setupTabs(){
