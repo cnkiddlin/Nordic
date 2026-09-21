@@ -249,6 +249,13 @@ svg{display:block}
   display:flex;align-items:center;justify-content:center;
   border-radius:6px;background:var(--teal-soft);color:var(--teal);
 }
+.item-icon.icon-plane{background:#e7eef5;color:#335f7e}
+.item-icon.icon-car{background:var(--teal-soft);color:var(--teal)}
+.item-icon.icon-bed{background:#f6edd9;color:#9a6a12}
+.item-icon.icon-hike,
+.item-icon.icon-pin,
+.item-icon.icon-sun,
+.item-icon.icon-spark{background:#fae8e2;color:#b04a2e}
 .item-main{flex:1;min-width:0}
 .item-title{display:block;font-size:13px;font-weight:700}
 .item-meta{display:block;font-size:12px;color:var(--muted);margin-top:2px}
@@ -763,7 +770,7 @@ function dayCardHtml(d, isToday, open){
       </div>` : '';
     return `
       <div class="day-item${it.free ? ' free' : ''}">
-        <span class="item-icon">${icon(it.icon)}</span>
+        <span class="item-icon icon-${it.icon}">${icon(it.icon)}</span>
         <div class="item-main">
           <span class="item-title">${it.title}</span>
           <span class="item-meta">${it.time ? '<b>' + it.time + '</b> · ' : ''}${it.place}</span>
@@ -803,7 +810,7 @@ function renderDays(){
   const todayIdx = DAYS.findIndex(d => d.dateKey === today);
   const hintEl = document.getElementById('daySectionHint');
   const html = DAYS.map((d, i) => dayCardHtml(d, !tripEnded && i === todayIdx, true)).join('');
-  hintEl.textContent = tripEnded ? '14 天行程回顾' : (todayIdx >= 0 ? '今日 ' + DAYS[todayIdx].id + ' · 全部展开' : '14 天行程 · 全部展开');
+  hintEl.textContent = tripEnded ? '14 天行程回顾' : (todayIdx >= 0 ? '今日 ' + DAYS[todayIdx].id : '14 天行程');
   document.getElementById('dayList').innerHTML = html;
   bindDayToggles();
 }
