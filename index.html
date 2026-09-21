@@ -47,7 +47,7 @@ svg{display:block}
   border-radius:0;
   max-width:none;
 }
-.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:0 0 auto}
 .brand-mark{
   width:34px;height:34px;border-radius:var(--radius);
   background:var(--teal);color:#fff;
@@ -55,7 +55,18 @@ svg{display:block}
 }
 .brand b{display:block;font-size:16px;white-space:nowrap}
 .brand small{display:block;color:var(--muted);font-size:12px}
-.masthead nav{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.masthead nav{
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center;
+  gap:6px;
+  justify-content:flex-end;
+  min-width:0;
+  flex:1 1 auto;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.masthead nav::-webkit-scrollbar{display:none}
 .masthead nav button{
   font:inherit;
   font-size:12px;line-height:1;padding:7px 9px;
@@ -284,8 +295,11 @@ svg{display:block}
   .cols-3{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:640px){
-  .masthead{flex-direction:column;align-items:flex-start}
-  .masthead nav{width:100%}
+  .masthead{flex-direction:row;align-items:center;gap:8px;padding:10px 12px}
+  .masthead nav{gap:4px}
+  .masthead nav button{font-size:11px;padding:6px 7px}
+  .brand{gap:8px}
+  .brand b{font-size:14px}
   .cols-4,.cols-3,.cols-2{grid-template-columns:1fr}
   .now-title{font-size:24px}
   .countdown{gap:6px}
@@ -312,7 +326,7 @@ svg{display:block}
     <span><b>北欧之旅</b></span>
   </div>
   <nav role="tablist" aria-label="内容分区">
-    <button type="button" class="tab-btn active" data-tab="home" id="tab-home" role="tab" aria-selected="true">每日行程</button>
+    <button type="button" class="tab-btn active" data-tab="home" id="tab-home" role="tab" aria-selected="true">行程</button>
     <button type="button" class="tab-btn" data-tab="flights" id="tab-flights" role="tab" aria-selected="false">航班</button>
     <button type="button" class="tab-btn" data-tab="hotels" id="tab-hotels" role="tab" aria-selected="false">酒店</button>
     <button type="button" class="tab-btn" data-tab="rentals" id="tab-rentals" role="tab" aria-selected="false">租车</button>
@@ -336,7 +350,7 @@ svg{display:block}
 
     <section class="section" id="days">
       <div class="section-head">
-        <h2>每日行程</h2>
+        <h2>行程</h2>
         <span id="daySectionHint"></span>
       </div>
       <div id="dayList"></div>
@@ -578,8 +592,7 @@ const DAYS = [
   {
     id:'D14', date:'10/6', dateKey:'2026-10-06', week:'周二', place:'北京',
     items:[
-      {icon:'plane', title:'CA738 · 国航', time:'13:30 起飞 · 10/7 04:00 抵达', place:'华沙机场 → 北京首都机场 T3'},
-      {icon:'clock', title:'机上过夜', time:'', place:'航班中', free:true}
+      {icon:'plane', title:'CA738 · 国航', time:'13:30 起飞 · 10/7 04:00 抵达', place:'华沙机场 → 北京首都机场 T3'}
     ]
   }
 ];
